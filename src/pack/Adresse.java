@@ -46,11 +46,11 @@ public class Adresse {
 		this.ville = nville;
 	}
 	
-	public void setResident(Personne p) {
+	public void setResident(User p) {
 		this.resident = p;
 	}
 	
-	public Personne getResident() {
+	public User getResident() {
 		return this.resident;
 	}
  }
