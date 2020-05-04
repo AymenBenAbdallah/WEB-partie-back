@@ -12,12 +12,12 @@
 			      </a>
 			    </li>
 			</ul>
-		    <a class="btn btn-primary" data-toggle="modal" data-target="login" v-if="!logged" >Se connecter</a>
+		    <a class="btn btn-primary" data-toggle="modal" data-target="#login" v-if="!logged" >Se connecter</a>
 		    <a class="btn btn-primary" v-else>{{LoggedUser.nom}} {{LoggedUser.prenom}}</a>
 	  	</div>
 	  </div>
 	  
-	  <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="loogine" aria-hidden="true">
+	  <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="login" aria-hidden="true">
 		  <div class="modal-dialog modal-dialog-centered" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
