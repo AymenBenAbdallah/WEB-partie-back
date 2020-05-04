@@ -12,34 +12,44 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Livraison {
+public class Vendeur {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	Integer id;
-	@OneToMany
-	Commande commande;
+	
+	User user;
+	
+	Stock stock;
+	
 	
 	@OneToMany
-	Collection<Produit> produits = new ArrayList<Produit>();
+	Collection<Avis> avis = new ArrayList<Avis>();
 	
 	public Integer getId() {
 		return this.id;
 	}
 	
-	public Commande getCommande() {
-		return this.commande;
+	public User getUser() {
+		return this.user;
 	}
 	
-	public void setCommande(Commande com) {
-		this.commande = com;
+	public void setUser(User u) {
+		this.user = u;
 	}
 	
-	public Collection<Produit> getProduits() {
-		return this.produits;
+	public Stock getStock() {
+		return this.stock;
 	}
 	
-	public void addProduit(Produit prod) {
-		this.produits.add(prod);
+	public void setStock(Stock s) {
+		this.stock = s;
+	}
+	public Collection<Avis> getAvis() {
+		return this.avis;
+	}
+	
+	public void addAvis(Avis a) {
+		this.avis.add(a);
 	}
 	
 }

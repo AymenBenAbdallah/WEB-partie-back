@@ -1,5 +1,7 @@
 package pack;
 
+import java.util.HashMap;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,8 +16,7 @@ public class Stock {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	int stockId;
-	int quantite;
-	int productId;
+	HashMap<Produit, Integer> inventaire = new HashMap<Produit, Integer>();
 	
 	
 	public int getStockId() {
@@ -24,17 +25,11 @@ public class Stock {
 	public void setStockId(int stockId) {
 		this.stockId = stockId;
 	}
-	public int getQuantite() {
-		return quantite;
+	public int getProduit(Produit prod) {
+		return this.inventaire.get(prod);
 	}
-	public void setQuantite(int quantite) {
-		this.quantite = quantite;
-	}
-	public int getProductId() {
-		return productId;
-	}
-	public void setProductId(int productId) {
-		this.productId = productId;
+	public void addProduit(Produit produit, Integer quantite) {
+		this.inventaire.put(produit, quantite);
 	}
 
 }

@@ -1,5 +1,6 @@
 package pack;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -20,9 +21,9 @@ public class Commande {
 	Date dcommande;
 	Date dlivraison;
 	
-	Collection<Livraison> livraisons;
+	Collection<Livraison> livraisons = new ArrayList<Livraison>();
 	
-	Collection<Vendeur> vendeurs;
+	Collection<Vendeur> vendeurs  = new ArrayList<Vendeur>();
 
 	public int getId() {
 		return id;
@@ -53,7 +54,7 @@ public class Commande {
 	}
 
 	public void addLivraison(Livraison livraison) {
-		this.livraisons = livraison;
+		this.livraisons.add(livraison);
 	}
 
 	public Collection<Vendeur> getVendeurs() {
@@ -61,6 +62,6 @@ public class Commande {
 	}
 
 	public void addVendeur(Vendeur vendeur) {
-		this.vendeurs.add(livraison);
+		this.vendeurs.add(vendeur);
 	}
 }
