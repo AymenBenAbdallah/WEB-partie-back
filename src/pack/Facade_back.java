@@ -56,16 +56,19 @@ public class Facade_back extends HttpServlet {
 	 @POST
 	    @Path("/addUser")
 	    @Consumes({ "application/json" })
-	    public void addUser(User u) {
+	    public void createUser(User u, Adresse a) {
 		 try {
-			 Object result1 = em.createQuery("SELECT * FROM TABLE adresses where (Rue.value = :" + u.getAdresse().getRue() +") AND (Ville.value = :"+u.getAdresse().getVille()+") AND (Num.value = :"+u.getAdresse().getNum()+")")
-                 .setParameter("addr", "addr").getSingleResult();
-			 
-		 try {
-			 Object result2 = em.createQuery("SELECT email FROM TABLE users where email.value = :" + u.getEmail())
-                 .setParameter(u.getEmail(), "email").getSingleResult();
-		 }catch(NoResultException noresult) {
-			 em.persist(u); 
-		 }
-	    }}
+			 Object result1 = em.createQuery("SELECT * FROM TABLE adresses where (Rue.value = '" + a.getRue() +"') AND (Ville.value = '"+a.getVille()+"') AND (Num.value = '"+a.getNum()+"')")
+                 .getSingleResult();
+		 }catch(NoResultException noresult1) {
+			 em.persist(a);
+			 try {
+				 Object result2 = em.createQuery("SELECT email FROM TABLE users where email.value = '" + u.getEmail()+"'")
+	                 .getSingleResult();
+			 }catch(NoResultException noresult2) {
+				 em.persist(u);
+			 }
+	    }
+		 
+		}
 }
