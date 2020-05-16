@@ -2,16 +2,23 @@
 package pack;
 
 import java.util.Collection;
+
+import java.lang.Math;
+
 import javax.ejb.Singleton;
+
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,9 +32,20 @@ import javax.servlet.http.HttpServletResponse;
 @Path("/")
 public class Facade_back extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	static int taille_token = 22;
+
 	
 	@PersistenceContext
     EntityManager em;
+		
+	static String generateToken() {
+		String token = "";
+		for (int i = 0; i < taille_token; i++) {
+			token += (char) ((char) (Math.random() * ( 126 - 32 )) + 32);
+		}
+		
+		return token;
+	}
 
     /**
      * @see HttpServlet#HttpServlet()
@@ -71,4 +89,24 @@ public class Facade_back extends HttpServlet {
 	    }
 		 
 		}
+	 
+	 @POST
+	 @Path("/login")
+	 @Consumes({"application/json"})
+	 @Produces({"application/json"})
+	 public String loginUser(User u) {
+		try {
+			resultMail = em.createQuery("SELECT email FROM TABLE users where email.value = '" + u.getEmail()+"'");
+		} catch (NoResultException noResultMail) {
+			throw new Exception("Mail not found");
+		}			 
+		try {
+			Object resultPass = em.createQuery("SELECT password FROM TABLE users where password.value = '"
+					 + u.getPassword() + "'");			 
+		} catch (NoResultException noResultPass) {
+			throw new Exception("Wrong password");
+		}
+		return generateToken();
+	 }
 }
+

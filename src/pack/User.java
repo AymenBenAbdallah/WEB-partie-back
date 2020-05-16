@@ -23,6 +23,7 @@ public class User {
 	String nom;
 	String prenom;
 	String email;
+	String password;
 	
 	@OneToOne
 	Adresse adresse;
@@ -59,6 +60,14 @@ public class User {
 		this.email=email;
 	}
 	
+	public void getPassword() {
+		return this.password;
+	}
+	
+	public String setPassword(String password) {
+		this.password = password;		
+	}
+	
 	public Adresse getAdresse() {
 		return adresse;
 	}
@@ -68,3 +77,4 @@ public class User {
 	}
 
 }
+
