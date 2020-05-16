@@ -2,6 +2,7 @@ package pack;
 
 import java.util.Collection;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -16,7 +17,12 @@ public class User {
     @GeneratedValue(strategy=GenerationType.AUTO)  
 	int id;
 
+	@Column(name = "SCN", nullable = false, unique = true)
+    private String scn;
+	
 	String nom;
+	String prenom;
+	String email;
 	
 	@OneToOne
 	Adresse adresse;
@@ -35,6 +41,22 @@ public class User {
 	
 	public void setNom(String name) {
 		this.nom = name;
+	}
+	
+	public String getPrenom() {
+		return this.prenom;
+	}
+	
+	public void setPrenom(String name) {
+		this.prenom = name;
+	}
+	
+	public String getEmail() {
+		return this.email;
+	}
+	
+	public void setEmail(String email){
+		this.email=email;
 	}
 	
 	public Adresse getAdresse() {
