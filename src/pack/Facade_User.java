@@ -26,29 +26,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@Singleton
-@Path("/")
-public class Facade_back  {
-	
-	static int taille_token = 22;
 
+
+@Singleton
+@Path("/user")
+public class Facade_User  {
 	
 	@PersistenceContext
     EntityManager em;
-		
-	static String generateToken() {
-		String token = "";
-		for (int i = 0; i < taille_token; i++) {
-			token += (char) ((char) (Math.random() * ( 126 - 32 )) + 32);
-		}
-		
-		return token;
-	}
-
+	
+	
 	@GET
-    @Path("/listUsers")
+    @Path("/search")
     @Produces({ "application/json" })
-    public Response listUsers() {
+    public Response search() {
 
 		Collection<User> users = em.createQuery("from User", User.class).getResultList();
 
@@ -61,9 +52,11 @@ public class Facade_back  {
 			            .header("Access-Control-Max-Age", "120")
 			            .build();
 	}
-    
+	
+	
+	
 	@POST
-    @Path("/addUser")
+    @Path("/add")
     @Consumes({"application/json" })
     public Response createUser(User user) {
 		em.persist(user);
@@ -89,22 +82,41 @@ public class Facade_back  {
 			            .build();
 	}
 	 
-	 @POST
-	 @Path("/login")
-	 @Consumes({"application/json"})
-	 @Produces({"application/json"})
-	 public String loginUser(User u) throws Exception {
-		try {
-			Query resultMail = em.createQuery("SELECT email FROM TABLE users where email.value = '" + u.getEmail()+"'");
-		} catch (NoResultException noResultMail) {
-			throw new Exception("Mail not found");
-		}			 
-		try {
-			Query resultPass = em.createQuery("SELECT password FROM TABLE users where password.value = '" + u.getPassword() + "'");			 
-		} catch (NoResultException noResultPass) {
-			throw new Exception("Wrong password");
-		}
-		return generateToken();
-	 }
+	@POST
+    @Path("/delete")
+    @Consumes({"application/json" })
+    public Response deleteUser(User user) {
+		User u = em.find(User.class, user.id);
+		em.remove(u);
+		return Response.ok()
+				 		.status(200)
+			 		 	.header("Access-Control-Allow-Origin", "*")
+			            .header("Access-Control-Allow-Headers", "x-requested-with")
+			            .header("Access-Control-Allow-Credentials", "true")
+			            .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
+			            .header("Access-Control-Max-Age", "120")
+			            .build();
+	}
+	 
+	@POST
+	@Path("/modif")
+	@Consumes({"application/json" })
+    public Response modifUser(User user) {
+		User u = em.find(User.class, user.id);
+		u.setAdresse(user.adresse);
+		u.setEmail(user.email);
+		u.setNom(user.nom);
+		u.setPrenom(user.prenom);
+		u.setPassword(user.password);
+		
+		return Response.ok()
+				 		.status(200)
+			 		 	.header("Access-Control-Allow-Origin", "*")
+			            .header("Access-Control-Allow-Headers", "x-requested-with")
+			            .header("Access-Control-Allow-Credentials", "true")
+			            .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
+			            .header("Access-Control-Max-Age", "120")
+			            .build();
+	}
 }
 

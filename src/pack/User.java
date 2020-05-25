@@ -23,6 +23,10 @@ public class User {
 	String email;
 	String password;
 	
+	
+	@OneToOne 
+	Vendeur vendeur;
+	
 	@OneToOne
 	Adresse adresse;
 

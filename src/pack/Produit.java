@@ -13,6 +13,7 @@ public class Produit {
 	
 	String description;
 	
+	String nom;
 	@ManyToOne
 	Livraison livraison;
 	
@@ -40,6 +41,13 @@ public class Produit {
 		this.description = description;
 	}
 	
+	public String getNom() {
+		return this.nom;
+	}
+	
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
 	public float gePrice() {
 		return this.price;
 	}
