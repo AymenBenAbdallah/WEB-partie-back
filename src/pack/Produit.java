@@ -1,11 +1,11 @@
 package pack;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+@Entity
 public class Produit {
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)  
@@ -13,9 +13,16 @@ public class Produit {
 	
 	String description;
 	
-	int stockId;
+	@ManyToOne
+	Livraison livraison;
+	
+	@OneToOne
+	Inventaire inventaire;
+	
 	float price;
-	Collection<Avis> avis;
+	
+	@OneToMany(mappedBy="produit", fetch = FetchType.EAGER)
+	Collection<Avis> avis = new ArrayList<Avis>();
 	
 	public int getId() {
 		return productId;

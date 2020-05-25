@@ -1,12 +1,6 @@
 package pack;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
 public class Avis {
@@ -17,6 +11,8 @@ public class Avis {
 	String commentaire;
 	int note;
 	
+	@ManyToOne
+	Produit produit;
 	
 	public int getAvis() {
 		return avis;

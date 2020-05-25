@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -16,10 +17,11 @@ public class Livraison {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	Integer id;
-	@OneToMany
+	
+	@ManyToOne
 	Commande commande;
 	
-	@OneToMany
+	@OneToMany(mappedBy="livraison", fetch = FetchType.EAGER)
 	Collection<Produit> produits = new ArrayList<Produit>();
 	
 	public Integer getId() {

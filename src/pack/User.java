@@ -17,8 +17,6 @@ public class User {
     @GeneratedValue(strategy=GenerationType.AUTO)  
 	int id;
 
-	@Column(name = "SCN", nullable = false, unique = true)
-    private String scn;
 	
 	String nom;
 	String prenom;
@@ -60,11 +58,11 @@ public class User {
 		this.email=email;
 	}
 	
-	public void getPassword() {
+	public String getPassword() {
 		return this.password;
 	}
 	
-	public String setPassword(String password) {
+	public void setPassword(String password) {
 		this.password = password;		
 	}
 	

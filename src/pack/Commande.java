@@ -22,8 +22,10 @@ public class Commande {
 	Date dcommande;
 	Date dlivraison;
 	
+	@OneToMany(mappedBy="commande", fetch = FetchType.EAGER)
 	Collection<Livraison> livraisons = new ArrayList<Livraison>();
 	
+	@OneToMany(mappedBy="commande", fetch = FetchType.EAGER)
 	Collection<Vendeur> vendeurs  = new ArrayList<Vendeur>();
 
 	public int getId() {

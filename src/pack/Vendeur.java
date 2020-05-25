@@ -2,14 +2,8 @@ package pack;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 @Entity
 public class Vendeur {
@@ -17,10 +11,14 @@ public class Vendeur {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	Integer id;
 	
+	@OneToOne
 	User user;
 	
+	@OneToOne
 	Stock stock;
 	
+	@ManyToOne
+	Commande commande;
 	
 	@OneToMany
 	Collection<Avis> avis = new ArrayList<Avis>();

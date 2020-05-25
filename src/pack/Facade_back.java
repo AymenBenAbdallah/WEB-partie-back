@@ -10,12 +10,13 @@ import javax.ejb.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
 
 import java.io.IOException;
 
@@ -25,13 +26,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class Facade_back
- */
 @Singleton
 @Path("/")
-public class Facade_back extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+public class Facade_back  {
+	
 	static int taille_token = 22;
 
 	
@@ -47,62 +45,62 @@ public class Facade_back extends HttpServlet {
 		return token;
 	}
 
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public Facade_back() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	@GET
+    @Path("/listUsers")
+    @Produces({ "application/json" })
+    public Response listUsers() {
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		Collection<User> users = em.createQuery("from User", User.class).getResultList();
+
+		 return Response.ok(users)
+				 		.status(200)
+			 		 	.header("Access-Control-Allow-Origin", "*")
+			            .header("Access-Control-Allow-Headers", "*")
+			            .header("Access-Control-Allow-Credentials", "true")
+			            .header("Access-Control-Allow-Methods", "*")
+			            .header("Access-Control-Max-Age", "120")
+			            .build();
 	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+    
+	@POST
+    @Path("/addUser")
+    @Consumes({"application/json" })
+    public Response createUser(User user) {
+		em.persist(user);
+//		 try {
+//			 em.createQuery("SELECT * FROM TABLE adresses where (Rue.value = '" + user.adresse.getRue() +"') AND (Ville.value = '"+user.adresse.getVille()+"') AND (Num.value = '"+user.adresse.getNum()+"')")
+//	             .getSingleResult();
+//		 }catch(NoResultException noresult1) {
+//			 em.persist(user.adresse);
+//			 try {
+//				 em.createQuery("SELECT email FROM TABLE users where email.value = '" + user.getEmail()+"'")
+//	                 .getSingleResult();
+//			 }catch(NoResultException noresult2) {
+//				 em.persist(user);
+//			 }
+//		}
+		 return Response.ok()
+				 		.status(200)
+			 		 	.header("Access-Control-Allow-Origin", "*")
+			            .header("Access-Control-Allow-Headers", "x-requested-with")
+			            .header("Access-Control-Allow-Credentials", "true")
+			            .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
+			            .header("Access-Control-Max-Age", "120")
+			            .build();
 	}
-
-	 @POST
-	    @Path("/addUser")
-	    @Consumes({ "application/json" })
-	    public void createUser(User u, Adresse a) {
-		 try {
-			 Object result1 = em.createQuery("SELECT * FROM TABLE adresses where (Rue.value = '" + a.getRue() +"') AND (Ville.value = '"+a.getVille()+"') AND (Num.value = '"+a.getNum()+"')")
-                 .getSingleResult();
-		 }catch(NoResultException noresult1) {
-			 em.persist(a);
-			 try {
-				 Object result2 = em.createQuery("SELECT email FROM TABLE users where email.value = '" + u.getEmail()+"'")
-	                 .getSingleResult();
-			 }catch(NoResultException noresult2) {
-				 em.persist(u);
-			 }
-	    }
-		 
-		}
 	 
 	 @POST
 	 @Path("/login")
 	 @Consumes({"application/json"})
 	 @Produces({"application/json"})
-	 public String loginUser(User u) {
+	 public String loginUser(User u) throws Exception {
 		try {
-			resultMail = em.createQuery("SELECT email FROM TABLE users where email.value = '" + u.getEmail()+"'");
+			Query resultMail = em.createQuery("SELECT email FROM TABLE users where email.value = '" + u.getEmail()+"'");
 		} catch (NoResultException noResultMail) {
 			throw new Exception("Mail not found");
 		}			 
 		try {
-			Object resultPass = em.createQuery("SELECT password FROM TABLE users where password.value = '"
-					 + u.getPassword() + "'");			 
+			Query resultPass = em.createQuery("SELECT password FROM TABLE users where password.value = '" + u.getPassword() + "'");			 
 		} catch (NoResultException noResultPass) {
 			throw new Exception("Wrong password");
 		}

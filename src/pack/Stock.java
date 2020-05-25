@@ -1,23 +1,20 @@
 package pack;
 
-import java.util.HashMap;
+import java.util.*;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-
+import javax.persistence.*;
 @Entity
 public class Stock {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	int stockId;
-	HashMap<Produit, Integer> inventaire = new HashMap<Produit, Integer>();
 	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="stock", fetch = FetchType.EAGER)
+	Collection<Inventaire> inventaires = new ArrayList<Inventaire>();
+	
+	@OneToOne
+	Vendeur vendeur;
 	
 	public int getStockId() {
 		return stockId;
@@ -25,11 +22,18 @@ public class Stock {
 	public void setStockId(int stockId) {
 		this.stockId = stockId;
 	}
-	public int getProduit(Produit prod) {
-		return this.inventaire.get(prod);
+	public Collection<Inventaire> getInventaire() {
+		return this.inventaires;
 	}
-	public void addProduit(Produit produit, Integer quantite) {
-		this.inventaire.put(produit, quantite);
+	public void addInventaire(Inventaire inventaire) {
+		
+		this.inventaires.add(inventaire);
 	}
-
+	
+	public Vendeur getVendeur() {
+		return this.vendeur;
+	}
+	public void setVendeur(Vendeur vendeur) {
+		this.vendeur = vendeur;
+	}
 }
