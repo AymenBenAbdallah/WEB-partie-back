@@ -1,5 +1,6 @@
 package pack;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.Column;
@@ -8,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -29,6 +31,9 @@ public class User {
 	
 	@OneToOne
 	Adresse adresse;
+	
+	@OneToMany(mappedBy="userId", fetch = FetchType.EAGER)
+	Collection<Commande> commandes = new ArrayList<Commande>();
 
 	public int getId() {
 		return id;
@@ -79,4 +84,5 @@ public class User {
 	}
 
 }
+
 

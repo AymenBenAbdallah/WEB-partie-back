@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Commande {
@@ -18,9 +19,11 @@ public class Commande {
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)  
 	int id;
-
 	Date dcommande;
 	Date dlivraison;
+	
+	@ManyToOne
+	int userId;
 	
 	@OneToMany(mappedBy="commande", fetch = FetchType.EAGER)
 	Collection<Livraison> livraisons = new ArrayList<Livraison>();
@@ -68,3 +71,4 @@ public class Commande {
 		this.vendeurs.add(vendeur);
 	}
 }
+
