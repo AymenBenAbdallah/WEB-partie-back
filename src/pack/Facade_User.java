@@ -86,6 +86,8 @@ public class Facade_User  {
 				
 				// On n'a pas catch d'exception donc l'adresse existait déjà 
 				user.setAdresse(ad);
+				em.persist(user);
+				ad.setResident(user);
 			}
 			catch (Exception ex) {
 				Adresse newAdresse = new Adresse();
@@ -94,10 +96,14 @@ public class Facade_User  {
 				newAdresse.setRue(user.adresse.getRue());
 				em.persist(newAdresse);
 				user.setAdresse(newAdresse);
-				
+				em.persist(user);
+				newAdresse.setResident(user);
 			}
-			em.persist(user);
 		
+			Panier panier = new Panier();
+			panier.setUser(user);
+			em.persist(panier);
+			user.setPanier(panier);
 			return Response.ok()
 				 		.status(200)
 			 		 	.header("Access-Control-Allow-Origin", "*")
