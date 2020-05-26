@@ -58,7 +58,10 @@ public class Facade_Login  {
 			result.setParameter(1, u.email);
 			result.setParameter(2, u.password);
 			
-			User user = (User) result.getSingleResult();
+			Collection<User> user = result.getResultList();
+
+			
+			
 			String token = generateToken();
 			return Response.ok(new Object[]{user, token})
 			 		.status(200)
@@ -68,8 +71,8 @@ public class Facade_Login  {
 		            .header("Access-Control-Allow-Methods", "*")
 		            .header("Access-Control-Max-Age", "120")
 		            .build();
-		} catch (NoResultException noResultMail) {
-			throw new Exception("Invalid credentials");
+		} catch (Exception e) {
+			throw new Exception("Invalid credentials : "+ u.email + " and " + u.password +" are incorrect ");
 		}			 
 		
 		

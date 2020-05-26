@@ -18,11 +18,11 @@ public class Adresse {
 		return this.id;
 	}
 	
-	public int getNum() {
+	public int getNumero() {
 		return this.numero;
 	}
 	
-	public void setNum(int num) {
+	public void setNumero(int num) {
 		this.numero = num;
 	}
 	

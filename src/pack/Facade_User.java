@@ -59,20 +59,46 @@ public class Facade_User  {
     @Path("/add")
     @Consumes({"application/json" })
     public Response createUser(User user) {
-		em.persist(user);
-//		 try {
-//			 em.createQuery("SELECT * FROM TABLE adresses where (Rue.value = '" + user.adresse.getRue() +"') AND (Ville.value = '"+user.adresse.getVille()+"') AND (Num.value = '"+user.adresse.getNum()+"')")
-//	             .getSingleResult();
-//		 }catch(NoResultException noresult1) {
-//			 em.persist(user.adresse);
-//			 try {
-//				 em.createQuery("SELECT email FROM TABLE users where email.value = '" + user.getEmail()+"'")
-//	                 .getSingleResult();
-//			 }catch(NoResultException noresult2) {
-//				 em.persist(user);
-//			 }
-//		}
-		 return Response.ok()
+		
+		try {
+			Query result = em.createQuery("from User user " + "where user.email = ?1");
+			result.setParameter(1, user.email);
+			
+			User u = (User) result.getSingleResult();
+			// On n'a pas catch d'exception donc l'utilsateur existait déjà ...
+			return Response
+			 		.status(490)
+		 		 	.header("Access-Control-Allow-Origin", "*")
+		            .header("Access-Control-Allow-Headers", "x-requested-with")
+		            .header("Access-Control-Allow-Credentials", "true")
+		            .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
+		            .header("Access-Control-Max-Age", "120")
+		            .build();
+		}
+		catch (Exception e) {
+			try {
+				Query result = em.createQuery("from Adresse adresse " + "where adresse.rue = ?1 and adresse.ville = ?2 and adresse.numero = ?3");
+				result.setParameter(1, user.adresse.getRue());
+				result.setParameter(2, user.adresse.getVille());
+				result.setParameter(3, user.adresse.getNumero());
+				Adresse ad = (Adresse) result.getSingleResult();
+				
+				
+				// On n'a pas catch d'exception donc l'adresse existait déjà 
+				user.setAdresse(ad);
+			}
+			catch (Exception ex) {
+				Adresse newAdresse = new Adresse();
+				newAdresse.setNumero(user.adresse.getNumero());
+				newAdresse.setVille(user.adresse.getVille());
+				newAdresse.setRue(user.adresse.getRue());
+				em.persist(newAdresse);
+				user.setAdresse(newAdresse);
+				
+			}
+			em.persist(user);
+		
+			return Response.ok()
 				 		.status(200)
 			 		 	.header("Access-Control-Allow-Origin", "*")
 			            .header("Access-Control-Allow-Headers", "x-requested-with")
@@ -80,6 +106,7 @@ public class Facade_User  {
 			            .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
 			            .header("Access-Control-Max-Age", "120")
 			            .build();
+		}
 	}
 	 
 	@POST
