@@ -13,6 +13,8 @@ public class Avis {
 	
 	@ManyToOne
 	Produit produit;
+	@ManyToOne
+	User user;
 	
 	public int getAvis() {
 		return avis;
