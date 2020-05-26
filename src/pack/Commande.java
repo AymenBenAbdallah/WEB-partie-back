@@ -23,7 +23,7 @@ public class Commande {
 	Date dlivraison;
 	
 	@ManyToOne
-	int userId;
+	User user;
 	
 	@OneToMany(mappedBy="commande", fetch = FetchType.EAGER)
 	Collection<Livraison> livraisons = new ArrayList<Livraison>();

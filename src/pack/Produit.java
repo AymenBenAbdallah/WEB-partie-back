@@ -14,6 +14,7 @@ public class Produit {
 	String description;
 	
 	String nom;
+	
 	@ManyToOne
 	Livraison livraison;
 	
