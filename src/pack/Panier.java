@@ -12,6 +12,8 @@ import javax.persistence.*;
 @Entity
 public class Panier {
 	@Id
+	int panierId;
+	
 	@OneToOne
 	User user;
 	
