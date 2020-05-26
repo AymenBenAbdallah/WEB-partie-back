@@ -1,22 +1,29 @@
 package pack;
 
 
-
+import java.util.Collection;
+import java.lang.Math;
 import javax.ejb.Singleton;
-
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
-
-
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Singleton
-@Path("/avis_prod")
-public class Facade_Avis_prod {
+@Path("/panier")
+public class Facade_panier {
 	@PersistenceContext
     EntityManager em;
 
@@ -24,16 +31,15 @@ public class Facade_Avis_prod {
 	@POST
     @Path("/add")
     @Consumes({"application/json" })
-    public Response createAvis(Avis avis) {
+    public Response createCommande(Panier panier) {
 		
 		try {
-			Query result = em.createQuery("from Avis avis " + "where avis.produit = ?1 and avis.user = ?2");
-			result.setParameter(1, avis.produit);
-			result.setParameter(2, avis.user);
+			Query result = em.createQuery("from Panier panier " + "where panier.user = ?1");
+			result.setParameter(1, panier.getUser());
 
 			
-			Avis a = (Avis) result.getSingleResult();
-			// On n'a pas catch d'exception donc l'avis existait déjà ...
+			Panier p = (Panier) result.getSingleResult();
+			// On n'a pas catch d'exception donc le panier existe déja ...
 			return Response
 			 		.status(490)
 		 		 	.header("Access-Control-Allow-Origin", "*")
@@ -45,7 +51,8 @@ public class Facade_Avis_prod {
 		}
 		catch (Exception e) {
 			
-			em.persist(avis);
+			
+			em.persist(panier);
 		
 			return Response.ok()
 				 		.status(200)
@@ -61,9 +68,9 @@ public class Facade_Avis_prod {
 	@POST
     @Path("/delete")
     @Consumes({"application/json" })
-    public Response deleteAvis(Avis avis) {
-		Avis a = em.find(Avis.class, avis.id);
-		em.remove(a);
+    public Response deleteAvis(Panier panier) {
+		Panier p = em.find(Panier.class, panier.user);
+		em.remove(p);
 		return Response.ok()
 				 		.status(200)
 			 		 	.header("Access-Control-Allow-Origin", "*")
@@ -77,10 +84,9 @@ public class Facade_Avis_prod {
 	@POST
 	@Path("/modif")
 	@Consumes({"application/json" })
-    public Response modifAvis(Avis avis) {
-		Avis a = em.find(Avis.class, avis.id);
-		a.setNote(avis.note);
-		a.setCommentaire(avis.commentaire);
+    public Response modifAvis(Panier panier) {
+		Panier p = em.find(Panier.class, panier.user);
+		p.setPrice(panier.price);
 		
 		
 		return Response.ok()
@@ -90,6 +96,6 @@ public class Facade_Avis_prod {
 			            .header("Access-Control-Allow-Credentials", "true")
 			            .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
 			            .header("Access-Control-Max-Age", "120")
-			            .build();
-	}
+				            .build();
+		}
 }

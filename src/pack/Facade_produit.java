@@ -169,5 +169,26 @@ public class Facade_produit  {
 			            .build();
 	}
 	
+	@POST
+	@Path("/buy")
+	@Consumes({"application/json" })
+    public Response buy(UserEtProduit u) {
+		User user = u.user;
+		Produit prod = u.produit;
+		Produit p = em.find(Produit.class, prod.productId);
+		Panier panier = em.find(Panier.class, user);
+		p.setPanier(panier);
+		panier.setPrice(panier.price+p.price);
+		panier.getProd().add(p);
+		
+		return Response.ok()
+				 		.status(200)
+			 		 	.header("Access-Control-Allow-Origin", "*")
+			            .header("Access-Control-Allow-Headers", "x-requested-with")
+			            .header("Access-Control-Allow-Credentials", "true")
+			            .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
+			            .header("Access-Control-Max-Age", "120")
+			            .build();
+	}
 }
 
