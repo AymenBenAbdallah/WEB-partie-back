@@ -7,7 +7,7 @@ public class Avis {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	int avis;
+	int id;
 	String commentaire;
 	int note;
 	
@@ -16,12 +16,14 @@ public class Avis {
 	@ManyToOne
 	User user;
 	
-	public int getAvis() {
-		return avis;
+	public int getid() {
+		return this.id;
 	}
-	public void setAvis(int avis) {
-		this.avis = avis;
+	
+	public void setId(int id) {
+		this.id =id;
 	}
+	
 	public String getCommentaire() {
 		return commentaire;
 	}

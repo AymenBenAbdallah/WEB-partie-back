@@ -73,7 +73,7 @@ public class Facade_Avis_prod {
     @Path("/delete")
     @Consumes({"application/json" })
     public Response deleteAvis(Avis avis) {
-		Avis a = em.find(Avis.class, avis.avis);
+		Avis a = em.find(Avis.class, avis.id);
 		em.remove(a);
 		return Response.ok()
 				 		.status(200)
@@ -89,7 +89,7 @@ public class Facade_Avis_prod {
 	@Path("/modif")
 	@Consumes({"application/json" })
     public Response modifAvis(Avis avis) {
-		Avis a = em.find(Avis.class, avis.avis);
+		Avis a = em.find(Avis.class, avis.id);
 		a.setNote(avis.note);
 		a.setCommentaire(avis.commentaire);
 		
