@@ -173,13 +173,18 @@ public class Facade_produit  {
 	@Path("/buy")
 	@Consumes({"application/json" })
     public Response buy(UserEtProduit u) {
-		User user = u.user;
-		Produit prod = u.produit;
+		User user = u.getUser();
+		Produit prod = u.getProduit();
 		Produit p = em.find(Produit.class, prod.productId);
-		Panier panier = em.find(Panier.class, user);
-		p.setPanier(panier);
-		panier.setPrice(panier.price+p.price);
-		panier.getProd().add(p);
+		Panier panier = em.find(Panier.class, user.getId());
+		panier.setPrice(user.getPanier().price+p.price);
+		panier.setProd(p);
+		em.merge(panier);
+		Logger.getLogger(this.getClass()).info("-----------------------------------------------------------");
+		Logger.getLogger(this.getClass()).info("-----------------------------------------------------------");
+		Logger.getLogger(this.getClass()).info(em.find(Panier.class, user.getId()).prod.toString());
+		Logger.getLogger(this.getClass()).info("-----------------------------------------------------------");
+		Logger.getLogger(this.getClass()).info("-----------------------------------------------------------");
 		
 		return Response.ok()
 				 		.status(200)

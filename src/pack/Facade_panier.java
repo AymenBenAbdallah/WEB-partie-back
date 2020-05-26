@@ -27,6 +27,22 @@ public class Facade_panier {
 	@PersistenceContext
     EntityManager em;
 
+	@GET
+    @Path("/search")
+    @Produces({ "application/json" })
+    public Response search() {
+
+		Collection<Panier> paniers= em.createQuery("from Panier", Panier.class).getResultList();
+
+		 return Response.ok(paniers)
+				 		.status(200)
+			 		 	.header("Access-Control-Allow-Origin", "*")
+			            .header("Access-Control-Allow-Headers", "*")
+			            .header("Access-Control-Allow-Credentials", "true")
+			            .header("Access-Control-Allow-Methods", "*")
+			            .header("Access-Control-Max-Age", "120")
+			            .build();
+	}
 	
 	@POST
     @Path("/add")

@@ -1,6 +1,8 @@
 package pack;
 
-public class UserEtProduit {
+
+public class UserEtProduit{
+	
 	User user;
 	Produit produit;
 	

@@ -1,12 +1,18 @@
 package pack;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.*;
 
 @Entity
-public class Produit {
+public class Produit implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)  
 	int productId;

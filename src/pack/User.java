@@ -1,5 +1,6 @@
 package pack;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -13,8 +14,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
-public class User {
+public class User implements Serializable {
 	
+
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)  
 	int id;

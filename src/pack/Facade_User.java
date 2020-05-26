@@ -100,6 +100,7 @@ public class Facade_User  {
 			}
 		
 			Panier panier = new Panier();
+			panier.setPanierId(user.getId());
 			em.persist(panier);
 			user.setPanier(panier);
 			return Response.ok()

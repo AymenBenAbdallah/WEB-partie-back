@@ -1,6 +1,5 @@
 package pack;
 
-import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
@@ -20,7 +19,16 @@ public class Panier {
 	float price;
 	
 	@OneToMany(mappedBy="panier", fetch = FetchType.EAGER)
-	Collection<Produit> produits = new ArrayList<Produit>();
+	Collection<Produit> prod = new ArrayList<Produit>();
+	
+	
+	public void setPanierId(int p) {
+		this.panierId=p;
+	}
+	
+	public int getPanierId() {
+		return this.panierId;
+	}
 	
 	public User getUser() {
 		return this.user;
@@ -38,12 +46,12 @@ public class Panier {
 		return this.price;
 	}
 	
-	public void setProd(Collection<Produit> produits) {
-		this.produits=produits;
+	public void setProd(Produit prod) {
+		this.prod.add(prod);
 	}
 	
 	public Collection<Produit> getProd(){
-		return this.produits;
+		return this.prod;
 	}
 	
 }
