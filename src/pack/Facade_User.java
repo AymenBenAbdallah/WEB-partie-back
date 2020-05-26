@@ -130,7 +130,6 @@ public class Facade_User  {
 	@Consumes({"application/json" })
     public Response modifUser(User user) {
 		User u = em.find(User.class, user.id);
-		u.setAdresse(user.adresse);
 		u.setEmail(user.email);
 		u.setNom(user.nom);
 		u.setPrenom(user.prenom);

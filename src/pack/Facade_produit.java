@@ -1,8 +1,11 @@
 
 package pack;
 
+import java.awt.List;
+import java.util.ArrayList;
 import java.util.Collection;
-
+import java.util.Iterator;
+import org.jboss.logging.Logger;
 
 import javax.ejb.Singleton;
 
@@ -34,22 +37,62 @@ public class Facade_produit  {
 			            .header("Access-Control-Max-Age", "120")
 			            .build();
 	}
-	@GET
+	@POST
     @Path("/search")
-    @Produces({ "application/json" })
-    public Response search() {
+    @Consumes({ "text/plain" })
+	@Produces({"application/json"})
+    public Response search(String motCherche) throws Exception {
 
+		motCherche = motCherche.replace("{\"word\":\"", "");
+		motCherche = motCherche.replace("\"}", "");
+		
 		Collection<Produit> produits = em.createQuery("from Produit", Produit.class).getResultList();
-
-		return Response.ok(produits)
+		
+		try {
+			Iterator<Produit> it = produits.iterator();
+			Collection<Produit> result = new ArrayList<Produit>();
+			while (it.hasNext()) {
+				Produit prod = it.next();
+				if (prod.getNom().contains(motCherche)) {
+					result.add(prod);
+				}
+			}
+			return Response.ok(result)
+					 		.status(200)
+				 		 	.header("Access-Control-Allow-Origin", "*")
+				            .header("Access-Control-Allow-Headers", "*")
+				            .header("Access-Control-Allow-Credentials", "true")
+				            .header("Access-Control-Allow-Methods", "*")
+				            .header("Access-Control-Max-Age", "120")
+				            .build();
+		} catch(Exception e) {
+			throw new Exception("Là dedans");
+		}
+	}
+	
+	
+	@POST
+    @Path("/addDev")
+    @Consumes({"application/json" })
+    public Response create(Produit prod) {
+		
+	
+		// On enregistre le produit
+		em.persist(prod);
+		
+		
+		
+		return Response.ok()
 				 		.status(200)
 			 		 	.header("Access-Control-Allow-Origin", "*")
-			            .header("Access-Control-Allow-Headers", "*")
+			            .header("Access-Control-Allow-Headers", "x-requested-with")
 			            .header("Access-Control-Allow-Credentials", "true")
-			            .header("Access-Control-Allow-Methods", "*")
+			            .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
 			            .header("Access-Control-Max-Age", "120")
 			            .build();
 	}
+	
+	
 	
 	
 	@POST
@@ -68,7 +111,7 @@ public class Facade_produit  {
 		em.persist(inventaire.produit);
 		
 		// On va chercher le bon produit
-		Query query= em.createQuery("select produit from Produit produit" + "where produit.price = ?1 and produit.nom = ?2");
+		Query query = em.createQuery("from Produit produit" + "where produit.price = ?1 and produit.nom = ?2");
 		query.setParameter(1, inventaire.produit.price);
 		query.setParameter(2, inventaire.produit.nom);
 		Produit prod = (Produit) query.getSingleResult();

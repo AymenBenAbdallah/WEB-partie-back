@@ -63,7 +63,7 @@ public class Facade_Login  {
 			
 			
 			String token = generateToken();
-			return Response.ok(new Object[]{user, token})
+			return Response.ok(user)
 			 		.status(200)
 		 		 	.header("Access-Control-Allow-Origin", "*")
 		            .header("Access-Control-Allow-Headers", "*")
