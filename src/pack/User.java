@@ -26,6 +26,9 @@ public class User {
 	String password;
 	
 	
+	@OneToOne
+	Panier panier;
+	
 	@OneToOne 
 	Vendeur vendeur;
 	
@@ -81,6 +84,14 @@ public class User {
 
 	public void setAdresse(Adresse adresse) {
 		this.adresse = adresse;
+	}
+	
+	public Panier getPanier() {
+		return this.panier;
+	}
+	
+	public void setPanier(Panier panier) {
+		this.panier=panier;
 	}
 
 }

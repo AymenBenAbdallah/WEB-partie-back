@@ -22,6 +22,9 @@ public class Produit {
 	
 	float price;
 	
+	@ManyToOne
+	Panier panier;
+	
 	@OneToMany(mappedBy="produit", fetch = FetchType.EAGER)
 	Collection<Avis> avis = new ArrayList<Avis>();
 	
@@ -62,6 +65,14 @@ public class Produit {
 
 	public void addAvis(Avis avis) {
 		this.avis.add(avis);
+	}
+	
+	public void setPanier(Panier panier) {
+		this.panier = panier;
+	}
+	
+	public Panier getPanier() {
+		return this.panier;
 	}
 
 }
