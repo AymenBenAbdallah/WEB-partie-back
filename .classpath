@@ -8,12 +8,11 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="/home/camille/EAP-7.0.0/modules/system/layers/base/javax/persistence/api/main/hibernate-jpa-2.1-api-1.0.0.Final-redhat-1.jar"/>
-	<classpathentry kind="lib" path="/home/camille/EAP-7.0.0/modules/system/layers/base/javax/servlet/jsp/api/main/jboss-jsp-api_2.3_spec-1.0.1.Final-redhat-1.jar"/>
-	<classpathentry kind="lib" path="/home/camille/EAP-7.0.0/modules/system/layers/base/javax/servlet/api/main/jboss-servlet-api_3.1_spec-1.0.0.Final-redhat-1.jar"/>
-	<classpathentry kind="lib" path="/home/camille/EAP-7.0.0/modules/system/layers/base/javax/ws/rs/api/main/jboss-jaxrs-api_2.0_spec-1.0.0.Final-redhat-1.jar"/>
-	<classpathentry kind="lib" path="/home/camille/EAP-7.0.0/modules/system/layers/base/javax/ejb/api/main/jboss-ejb-api_3.2_spec-1.0.0.Final-redhat-1.jar"/>
-	<classpathentry kind="lib" path="/home/camille/EAP-7.0.0/modules/system/layers/base/com/fasterxml/jackson/jaxrs/jackson-jaxrs-json-provider/main/jackson-jaxrs-base-2.5.4.redhat-1.jar"/>
-	<classpathentry kind="lib" path="/home/camille/EAP-7.0.0/modules/system/layers/base/com/fasterxml/jackson/core/jackson-databind/main/jackson-databind-2.5.4.redhat-1.jar"/>
+	<classpathentry kind="lib" path="/media/marius/386d3476-ddfc-4255-88cc-3c27730ff27a/work/appli_web/jars/javax.json-1.0.jar"/>
+	<classpathentry kind="lib" path="/media/marius/386d3476-ddfc-4255-88cc-3c27730ff27a/work/appli_web/Jboss/modules/system/layers/base/javax/persistence/api/main/hibernate-jpa-2.1-api-1.0.0.Final-redhat-1.jar"/>
+	<classpathentry kind="lib" path="/media/marius/386d3476-ddfc-4255-88cc-3c27730ff27a/work/appli_web/Jboss/modules/system/layers/base/javax/ejb/api/main/jboss-ejb-api_3.2_spec-1.0.0.Final-redhat-1.jar"/>
+	<classpathentry kind="lib" path="/media/marius/386d3476-ddfc-4255-88cc-3c27730ff27a/work/appli_web/Jboss/modules/system/layers/base/javax/ws/rs/api/main/jboss-jaxrs-api_2.0_spec-1.0.0.Final-redhat-1.jar"/>
+	<classpathentry kind="lib" path="/media/marius/386d3476-ddfc-4255-88cc-3c27730ff27a/work/appli_web/Jboss/modules/system/layers/base/javax/servlet/api/main/jboss-servlet-api_3.1_spec-1.0.0.Final-redhat-1.jar"/>
+	<classpathentry kind="lib" path="/media/marius/386d3476-ddfc-4255-88cc-3c27730ff27a/work/appli_web/Jboss/modules/system/layers/base/com/fasterxml/jackson/core/jackson-databind/main/jackson-databind-2.5.4.redhat-1.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
