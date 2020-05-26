@@ -9,14 +9,15 @@ import java.util.Collection;
 
 import javax.persistence.*;
 
+@Entity
 public class Panier {
-
+	@Id
 	@OneToOne
 	User user;
 	
 	float price;
 	
-	@OneToMany(mappedBy="produit", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy="panier", fetch = FetchType.EAGER)
 	Collection<Produit> produits = new ArrayList<Produit>();
 	
 	public User getUser() {

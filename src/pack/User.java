@@ -35,7 +35,7 @@ public class User {
 	@OneToOne
 	Adresse adresse;
 	
-	@OneToMany(mappedBy="userId", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy="user", fetch = FetchType.EAGER)
 	Collection<Commande> commandes = new ArrayList<Commande>();
 
 	public int getId() {
